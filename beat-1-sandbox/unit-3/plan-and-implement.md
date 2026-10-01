@@ -19,9 +19,15 @@ ethanncyb
 
 **Plan comment**
 
-[Link to the comment where you posted your plan on the issue. Use the comment's own
-permalink. **Then paste the text of that comment underneath the link** — the pasted text is
-what this field is graded on, so copy across what you actually posted.]
+https://github.com/codepath/pathreview-ai301-fa26-s1/issues/29#issuecomment-5925955024
+
+> The gap is in the tests rather than the detector: `tests/unit/test_prompt_defense.py` builds each payload from the pattern under test, so it confirms the regexes match what they were written from and never asks whether published payloads get blocked. The baseline put a number on that — 0 of 10 PromptInject payloads flagged as published, 0 of 10 embedded mid-sentence, 2 of 2 positive controls flagged — and the mechanism the artifact supports is positional, since three of the six patterns begin with a literal `\n` and detection goes to 8 of 10 when exactly that character is prepended.
+>
+> So: the corpus becomes `tests/fixtures/injection_attempts/`, and `tests/security/test_prompt_injection.py` records what the defense currently does against it — the undetected payloads marked `xfail(strict=True)` in the style `CONTRIBUTING.md` documents, the positive controls asserted as passing so a dead harness can't look green. Out of scope, deliberately: any change to `prompt_defense.py`. #24 owns the whitespace-before-colon variant, this corpus exposes a third surface again, and a suite that describes the current behavior is more useful to whoever fixes the patterns than a suite written against the behavior we wish they had.
+>
+> On the CI half — I asked above whether the workflow change should ride along and haven't heard back, so I've scoped it in, since the issue states the suite should run in CI as part of the ask. It's a separate commit, so you can drop it and the suite still stands. One thing I'd take direction on: my `test-security` job runs on every PR rather than only on ones touching `safety/`, because a path filter makes the job skip rather than pass, and the `CI must be green` rule reads as wanting every job to report. Say the word if you'd rather it were filtered.
+>
+> Two things I should flag rather than have you find them. `strict=True` means that when a marked payload does start being detected, CI goes red with `XPASS(strict)` until the marker comes off — that is the signal I want when #24 lands, but it does couple this suite to the detector's behavior on purpose. And I have not tested the indirect path where an injection arrives inside a retrieved document, so none of this says anything about that route.
 
 ---
 
