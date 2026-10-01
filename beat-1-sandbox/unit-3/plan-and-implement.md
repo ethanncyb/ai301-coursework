@@ -56,7 +56,7 @@ collecting ... collected 0 items
 ============================ no tests ran in 0.10s =============================
 ```
 
-**After** — on `fix/29-prompt-injection-red-team-suite` at `2a79ede`, the same
+**After** — on `fix/29-prompt-injection-red-team-suite` at `18192d4`, the same
 command collects the corpus and records what the defense does with it. Each of
 the 10 attack payloads runs in three delivery shapes; `XFAIL` is a payload the
 defense does not currently detect:
