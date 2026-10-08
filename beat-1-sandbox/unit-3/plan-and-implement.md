@@ -19,8 +19,10 @@ ethanncyb
 
 **Plan comment**
 
-https://github.com/codepath/pathreview-ai301-fa26-s1/issues/29#issuecomment-5925955024
+https://github.com/codepath/pathreview-ai301-fa26-s1/issues/29#issuecomment-5926026050
 
+> Plan for this one, built on the baseline I posted above.
+>
 > The gap is in the tests rather than the detector: `tests/unit/test_prompt_defense.py` builds each payload from the pattern under test, so it confirms the regexes match what they were written from and never asks whether published payloads get blocked. The baseline put a number on that — 0 of 10 PromptInject payloads flagged as published, 0 of 10 embedded mid-sentence, 2 of 2 positive controls flagged — and the mechanism the artifact supports is positional, since three of the six patterns begin with a literal `\n` and detection goes to 8 of 10 when exactly that character is prepended.
 >
 > So: the corpus becomes `tests/fixtures/injection_attempts/`, and `tests/security/test_prompt_injection.py` records what the defense currently does against it — the undetected payloads marked `xfail(strict=True)` in the style `CONTRIBUTING.md` documents, the positive controls asserted as passing so a dead harness can't look green. Out of scope, deliberately: any change to `prompt_defense.py`. #24 owns the whitespace-before-colon variant, this corpus exposes a third surface again, and a suite that describes the current behavior is more useful to whoever fixes the patterns than a suite written against the behavior we wish they had.

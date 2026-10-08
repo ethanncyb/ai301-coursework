@@ -98,6 +98,8 @@ is green: ruff, black and mypy all pass.
 
 What did not change: the scope pair held exactly. `safety/prompt_defense.py` is
 untouched, the two paths the issue names are the two the suite uses, and the CI
-job is its own commit as promised. `git status --porcelain` on the finished
-branch is empty, and `plan.md` was never in the working tree — it lives in the
-course repo, not on the branch.
+job is its own commit as promised. `git diff main...HEAD --stat` on the
+finished branch lists only six files (the four under
+`tests/fixtures/injection_attempts/`, the suite, and `ci.yml`), and `plan.md` was never
+committed — it sits untracked beside `pr_draft.md` and `test_evidence.md` for
+the precheck, and its graded copy lives in the course repo, not on the branch.
